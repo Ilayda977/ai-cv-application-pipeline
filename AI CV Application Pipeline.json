@@ -1,0 +1,50 @@
+{
+  "name": "AI CV Application Pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Smart CV Application Input",
+        "formDescription": "Özelleştirilmiş CV ve ön yazınızı oluşturmak için iş ilanı detaylarını girin.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Şirket Adı (Örn: Trendyol)"
+            },
+            {
+              "fieldLabel": "Başvurulan Pozisyon (Örn: Frontend Developer Intern)"
+            },
+            {
+              "fieldLabel": "İş İlanı Metni (Kopyala-Yapıştır)",
+              "fieldType": "textarea"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        0
+      ],
+      "id": "473e80bc-4668-439a-9e40-f431734ebeb0",
+      "name": "On form submission",
+      "webhookId": "16c77506-9978-4d40-992a-7af28ee991b5"
+    }
+  ],
+  "pinData": {},
+  "connections": {},
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "197f770d-5b16-4fb5-a67c-e6b85a718cc9",
+  "meta": {
+    "instanceId": "cd6655eb13038b94531801dd4152c35f48d7e4ac20c1e8adfd5558a6aaa0b834"
+  },
+  "nodeGroups": [],
+  "id": "ViPxU0EjT1BlMjFr",
+  "tags": []
+}
