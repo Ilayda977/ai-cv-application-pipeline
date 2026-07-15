@@ -30,18 +30,100 @@
       "id": "473e80bc-4668-439a-9e40-f431734ebeb0",
       "name": "On form submission",
       "webhookId": "16c77506-9978-4d40-992a-7af28ee991b5"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Aşağıda paylaşılan bilgilere göre iki farklı çıktı üretmeni istiyorum.\n\n1. ÇIKTI (Summary Uyarlaması): Adayın LaTeX CV'sinde kullanılmak üzere, başvurduğu pozisyonun gereksinimlerine göre optimize edilmiş, siber güvenlik, yazılım geliştirme veya ilandaki anahtar kelimelerle doğrudan eşleşen 2-3 cümlelik İngilizce bir \"Summary\" (Özet) metni yaz. (Sadece düz İngilizce metin ver, LaTeX kodu yazma).\n\n2. ÇIKTI (E-posta Ön Yazısı): İlayda Aydoğan'ın ağzından, başvurulan şirkete ve pozisyona özel, samimi ama profesyonel, Ankara Üniversitesi Yazılım Mühendisliği 2. sınıf staj arayışını anlatan Türkçe bir e-posta metni yaz.\n\nADAY BİLGİLERİ:\n- İsim: İlayda Aydoğan\n- Eğitim: Ankara Üniversitesi Yazılım Mühendisliği 2. Sınıf\n- Teknik Yetenekler: C, C++, JavaScript, React, TypeScript, HTML, CSS.\n- Projeler: Smart energy management IoT projesi (E-Optimus) ve Trello benzeri proje yönetim platformu (Priorvia).\n\nBAŞVURU BİLGİLERİ:\n- Başvurulan Şirket: {{ $json['Şirket Adı (Örn: Trendyol)'] }}\n- Başvurulan Pozisyon: {{ $json['Başvurulan Pozisyon (Örn: Frontend Developer Intern)'] }}\n- İş İlanı Detayları: {{ $json['İş İlanı Metni (Kopyala-Yapıştır)'] }}\n\nLütfen yanıtını aşağıdaki JSON formatında ver. JSON dışında hiçbir şey (açıklama, markdown kod bloğu işaretleri ```json vb.) yazma:\n\n{\n  \"adapted_summary\": \"İngilizce olarak hazırladığın 2-3 cümlelik yeni CV özet alanı buraya gelecek.\",\n  \"email_cover_letter\": \"Türkçe olarak yazdığın, doğrudan e-posta gövdesine yapıştırılabilecek ön yazı buraya gelecek.\"\n}",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        192,
+        0
+      ],
+      "id": "f2f5d8ff-8178-4c6a-b758-2403dce7656c",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.1,
+      "position": [
+        192,
+        208
+      ],
+      "id": "26347ea1-ec51-450c-9efa-cb469ad0d271",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "G3bF3rLzn3ZLqChY",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const rawText = $input.item.json.text;\nreturn JSON.parse(rawText);"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        544,
+        0
+      ],
+      "id": "f2bffe80-71f9-4211-a2dc-2480a920bfa2",
+      "name": "Code in JavaScript"
     }
   ],
   "pinData": {},
-  "connections": {},
+  "connections": {
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
   "active": false,
   "settings": {
     "executionOrder": "v1",
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "197f770d-5b16-4fb5-a67c-e6b85a718cc9",
+  "versionId": "f501ee3e-eaa5-43ad-b525-13dee8483bb1",
   "meta": {
+    "templateCredsSetupCompleted": true,
     "instanceId": "cd6655eb13038b94531801dd4152c35f48d7e4ac20c1e8adfd5558a6aaa0b834"
   },
   "nodeGroups": [],
